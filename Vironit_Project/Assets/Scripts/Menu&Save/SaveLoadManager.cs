@@ -17,6 +17,13 @@ public class Data
 [Serializable]
 public class SaveLoadManager : MonoBehaviour
 {
+    private void Start()
+    {
+        if(File.Exists(Application.dataPath + "Save.txt")) 
+        {
+            LoadData();
+        }
+    }
     // Делаем поле публичным для добавления объектов, которые необходимо сохранять
     public List<GameObject> sphere;
 
