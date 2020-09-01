@@ -15,7 +15,16 @@ public class OpenDoor : MonoBehaviour
         if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
             open_door.Play("Open_door");
+
+
         }
+        if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
+        {
+            open_door.Play("Close_door");
+        }
+
+
+
 
     }
 }
