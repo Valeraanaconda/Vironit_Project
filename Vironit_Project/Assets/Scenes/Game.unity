@@ -1162,7 +1162,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1359347047}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -2585,7 +2585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef21c7320e919f348a8aea1a8c58f6bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: []
+  sphere:
+  - {fileID: 162445855}
 --- !u!4 &2068129778
 Transform:
   m_ObjectHideFlags: 0

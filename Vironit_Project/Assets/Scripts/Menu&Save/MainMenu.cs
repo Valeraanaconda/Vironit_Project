@@ -28,6 +28,7 @@ public class MainMenu : MonoBehaviour
     public void ResetProgress()
     {
         File.Delete(Application.dataPath + "Save.txt");
+        SceneManager.LoadScene("Main Menu");
     }
 
 
