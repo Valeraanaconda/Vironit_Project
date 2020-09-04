@@ -37,39 +37,28 @@ public class UseGameObject : MonoBehaviour
     public void GetObject() 
     {
         int layerMask = 00001000;
+
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(playerCamera.pixelWidth / 2, playerCamera.pixelHeight / 2, 0));
 
-        if (Physics.Raycast(ray, 1.5f, layerMask))
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 2.0f, layerMask))
         {
-            laptopPosition = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z + zOffset);
-
-            laptopRotation = Quaternion.Euler(xAnglePosition,-LaptopAngle(), 0);
-
             textE.SetActive(true);
 
-            //Debug.DrawRay(ray.origin, ray.direction*10, Color.yellow);
+            //Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
 
-            //if (Input.GetKeyDown(KeyCode.E))
-            //{
-            //    if (monitor.activeSelf) monitor.SetActive(false);
-            //    else monitor.SetActive(true);
-            //}
-
-            if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position == startLaptopPosition))
+            if (hit.collider.name == "laptop")
             {
-                laptop.transform.position = laptopPosition;
-                laptop.transform.rotation = laptopRotation;
-                laptop.transform.SetParent(playerCamera.transform,true);
+                UseLaptop();
             }
 
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (hit.collider.name == "TVset") 
             {
-                laptop.transform.position = startLaptopPosition;
-                laptop.transform.rotation = startLaptopRotation;
-                laptop.transform.parent = null;
+                UseTV();
             }
-
         }
+
         else
         {
             textE.SetActive(false);
@@ -84,5 +73,33 @@ public class UseGameObject : MonoBehaviour
         angle = Vector3.SignedAngle(targetDir, forward, Vector3.up);
         print(angle);
         return angle;
+    }
+public void UseLaptop()
+{
+    laptopPosition = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z + zOffset);
+
+    laptopRotation = Quaternion.Euler(xAnglePosition, -LaptopAngle(), 0);
+
+    if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position == startLaptopPosition))
+    {
+        laptop.transform.position = laptopPosition;
+        laptop.transform.rotation = laptopRotation;
+        laptop.transform.SetParent(playerCamera.transform, true);
+    }
+
+    else if (Input.GetKeyDown(KeyCode.E))
+    {
+        laptop.transform.position = startLaptopPosition;
+        laptop.transform.rotation = startLaptopRotation;
+        laptop.transform.parent = null;
+    }
+}
+    public void UseTV()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (monitor.activeSelf) monitor.SetActive(false);
+            else monitor.SetActive(true);
+        }
     }
 }

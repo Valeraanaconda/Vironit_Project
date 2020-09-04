@@ -1844,7 +1844,6 @@ GameObject:
   - component: {fileID: 4763079543819776}
   - component: {fileID: 33919374049460832}
   - component: {fileID: 23575542720409670}
-  - component: {fileID: 1595469079}
   m_Layer: 5
   m_Name: screen
   m_TagString: Untagged
@@ -1913,19 +1912,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1595469079
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028298447856264}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.28043833, y: 0.19134258, z: 0.054263286}
-  m_Center: {x: -0.0000320971, y: 0.09198616, z: -0.025996119}
 --- !u!1 &1451490347123022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,7 +1923,6 @@ GameObject:
   - component: {fileID: 4143365056100512}
   - component: {fileID: 33852944419961820}
   - component: {fileID: 23211258989282010}
-  - component: {fileID: 1699510881}
   m_Layer: 5
   m_Name: laptop
   m_TagString: Untagged
@@ -2006,19 +1991,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1699510881
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1451490347123022}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.28190458, y: 0.009971121, z: 0.19687617}
-  m_Center: {x: 0, y: 0.0051092487, z: 0.00011594966}
 --- !u!1 &1716111664439686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2000,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4909941690500726}
+  - component: {fileID: 7462230099714805968}
   m_Layer: 5
   m_Name: laptop
   m_TagString: Untagged
@@ -2044,7 +2017,7 @@ Transform:
   m_GameObject: {fileID: 1716111664439686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4143365056100512}
   - {fileID: 4763079543819776}
@@ -2053,3 +2026,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7462230099714805968
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716111664439686}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3170298, y: 0.18953244, z: 0.12672842}
+  m_Center: {x: -0.011950573, y: 0.10027846, z: -0.088927805}
