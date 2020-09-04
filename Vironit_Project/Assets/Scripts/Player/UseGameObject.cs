@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class UseGameObject : MonoBehaviour
 {
-    
+    MouseLook mouse;
+    public PlayerMovement movement;
+
     public GameObject monitor;
     public GameObject textE;
     public GameObject laptop;
+    public GameObject player;
 
     private Camera playerCamera;
 
@@ -20,12 +23,12 @@ public class UseGameObject : MonoBehaviour
     private float yOffset = 0.53f;
     private float zOffset = 0.57f;
     private float xAnglePosition = 16f;
-    private float angle;
 
     private void Start()
     {
         playerCamera = GetComponent<Camera>();
-
+        mouse = GetComponent<MouseLook>();
+        
         startLaptopPosition = laptop.transform.position;
         startLaptopRotation = laptop.transform.rotation;
     }
@@ -65,41 +68,38 @@ public class UseGameObject : MonoBehaviour
         }
     }
 
-    public float LaptopAngle()
+    public void UseLaptop()
     {
-        // Танцы с бубном чтобы к ноуту можно было подходит не только в упор, но еще и сбоку.
-        Vector3 targetDir = playerCamera.transform.forward;
-        Vector3 forward = laptop.transform.forward;
-        angle = Vector3.SignedAngle(targetDir, forward, Vector3.up);
-        print(angle);
-        return angle;
-    }
-public void UseLaptop()
-{
-    laptopPosition = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z + zOffset);
+      laptopPosition = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z + zOffset);
 
-    laptopRotation = Quaternion.Euler(xAnglePosition, -LaptopAngle(), 0);
+      laptopRotation = Quaternion.Euler(xAnglePosition, player.transform.rotation.eulerAngles.y-180, 0);
 
-    if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position == startLaptopPosition))
-    {
+     if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position == startLaptopPosition))
+     {
         laptop.transform.position = laptopPosition;
         laptop.transform.rotation = laptopRotation;
-        laptop.transform.SetParent(playerCamera.transform, true);
-    }
+        // Костыль помогающий свести к минимуму погрешности
+        //laptop.transform.localScale = new Vector3(3.0f, 3.0f, 3.0f);
+        Cursor.lockState = CursorLockMode.Confined;
+        mouse.mouseSensitivity = 0.0f;
+        movement.speed = 0.0f;
+     }
 
-    else if (Input.GetKeyDown(KeyCode.E))
-    {
+     else if (Input.GetKeyDown(KeyCode.E))
+     {
         laptop.transform.position = startLaptopPosition;
         laptop.transform.rotation = startLaptopRotation;
-        laptop.transform.parent = null;
+        Cursor.lockState = CursorLockMode.Locked;
+        mouse.mouseSensitivity = 100.0f;
+        movement.speed = 2.0f;
+     }
     }
-}
-    public void UseTV()
-    {
+     public void UseTV()
+     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (monitor.activeSelf) monitor.SetActive(false);
             else monitor.SetActive(true);
         }
-    }
+     }
 }
