@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UseGameObject : MonoBehaviour
 {
+    
     public GameObject monitor;
     public GameObject textE;
     public GameObject laptop;
@@ -19,7 +20,7 @@ public class UseGameObject : MonoBehaviour
     private float yOffset = 0.53f;
     private float zOffset = 0.57f;
     private float xAnglePosition = 16f;
-    private float yAnglePosition = 180f;
+    private float angle;
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class UseGameObject : MonoBehaviour
         {
             laptopPosition = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z + zOffset);
 
-            laptopRotation = Quaternion.Euler(xAnglePosition, yAnglePosition, 0);
+            laptopRotation = Quaternion.Euler(xAnglePosition,-LaptopAngle(), 0);
 
             textE.SetActive(true);
 
@@ -58,12 +59,14 @@ public class UseGameObject : MonoBehaviour
             {
                 laptop.transform.position = laptopPosition;
                 laptop.transform.rotation = laptopRotation;
+                laptop.transform.SetParent(playerCamera.transform);
             }
 
-            else if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position == laptopPosition))
+            else if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position != laptopPosition))
             {
                 laptop.transform.position = startLaptopPosition;
                 laptop.transform.rotation = startLaptopRotation;
+                laptop.transform.parent = null;
             }
 
         }
@@ -71,5 +74,15 @@ public class UseGameObject : MonoBehaviour
         {
             textE.SetActive(false);
         }
+    }
+
+    public float LaptopAngle()
+    {
+        // Танцы с бубном чтобы к ноуту можно было подходит не только в упор, но еще и сбоку.
+        Vector3 targetDir = playerCamera.transform.forward;
+        Vector3 forward = laptop.transform.forward;
+        angle = Vector3.SignedAngle(targetDir, forward, Vector3.up);
+        print(angle);
+        return angle;
     }
 }
