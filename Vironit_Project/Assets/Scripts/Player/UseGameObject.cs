@@ -59,10 +59,10 @@ public class UseGameObject : MonoBehaviour
             {
                 laptop.transform.position = laptopPosition;
                 laptop.transform.rotation = laptopRotation;
-                laptop.transform.SetParent(playerCamera.transform);
+                laptop.transform.SetParent(playerCamera.transform,true);
             }
 
-            else if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position != laptopPosition))
+            else if (Input.GetKeyDown(KeyCode.E))
             {
                 laptop.transform.position = startLaptopPosition;
                 laptop.transform.rotation = startLaptopRotation;
