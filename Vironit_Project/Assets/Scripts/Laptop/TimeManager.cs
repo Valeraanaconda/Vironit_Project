@@ -5,9 +5,9 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     private float timer;
-    private float seconds;
-    private float minutes1 = 10.0f;
-    private float hours1 = 12.0f;
+    private float seconds=0.0f;
+    private float minutes1 = 30.0f;
+    private float hours1 = 6.0f;
 
     private void Start()
     {

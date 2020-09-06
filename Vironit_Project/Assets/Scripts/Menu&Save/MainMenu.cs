@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        if (File.Exists("E:/" + "Save.txt")) 
+        if (File.Exists(Application.dataPath + "Save.txt")) 
         {
             continueButton.SetActive(true);
             resetButton.SetActive(true);
@@ -18,7 +18,14 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayNewGame() 
     {
-        File.Delete("E:/" + "Save.txt");
+        File.Delete(Application.dataPath + "Save.txt");
+        PlayerPrefs.DeleteKey("seconds");
+        PlayerPrefs.DeleteKey("minutes");
+        PlayerPrefs.DeleteKey("hours");
+        PlayerPrefs.DeleteKey("timer");
+        PlayerPrefs.DeleteKey("DayTime");
+        PlayerPrefs.DeleteKey("SunIntencity");
+        PlayerPrefs.DeleteKey("MoonIntencity");
         SceneManager.LoadScene("Game");
     }
     public void ContinueGame()
@@ -27,7 +34,8 @@ public class MainMenu : MonoBehaviour
     }
     public void ResetProgress()
     {
-        File.Delete("E:/" + "Save.txt");
+        File.Delete(Application.dataPath + "Save.txt");
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("Main Menu");
     }
 

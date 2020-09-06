@@ -11178,8 +11178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sphere:
   - {fileID: 1390421223}
-  - {fileID: 1643834783}
-  - {fileID: 183906784}
 --- !u!4 &2068129778
 Transform:
   m_ObjectHideFlags: 0

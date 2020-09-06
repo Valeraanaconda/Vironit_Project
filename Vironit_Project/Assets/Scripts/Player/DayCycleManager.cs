@@ -25,6 +25,12 @@ public class DayCycleManager : MonoBehaviour
 
     void Start()
     {
+        if (PlayerPrefs.HasKey("DayTime")) 
+        {
+            TimeOfDay=PlayerPrefs.GetFloat("DayTime");
+            sunIntensity = PlayerPrefs.GetFloat("SunIntencity");
+            moonIntensity = PlayerPrefs.GetFloat("MoonIntencity");
+        }
         sunIntensity = Sun.intensity;
         moonIntensity = Moon.intensity;
     }
@@ -34,8 +40,9 @@ public class DayCycleManager : MonoBehaviour
     {
         TimeOfDay += Time.deltaTime / DayDuration;
         if (TimeOfDay >= 1) TimeOfDay -= 1;
+        PlayerPrefs.SetFloat("DayTime", TimeOfDay);
 
-        RenderSettings.skybox.Lerp(Day, Night, SkyBoxCurve.Evaluate(TimeOfDay));
+        RenderSettings.skybox.Lerp(Night,Day, SkyBoxCurve.Evaluate(TimeOfDay));
         RenderSettings.sun = SkyBoxCurve.Evaluate(TimeOfDay) >= 0.1f ? Sun : Moon;
         DynamicGI.UpdateEnvironment();
 
@@ -46,6 +53,10 @@ public class DayCycleManager : MonoBehaviour
         Moon.transform.localRotation = Quaternion.Euler(TimeOfDay * 360f+180f, 180, 0);
 
         Sun.intensity = sunIntensity * SunCurve.Evaluate(TimeOfDay);
+        PlayerPrefs.SetFloat("SunIntencity", Sun.intensity);
+
         Moon.intensity = moonIntensity * MoonCurve.Evaluate(TimeOfDay);
+        PlayerPrefs.SetFloat("MoonIntencity", Moon.intensity);
+
     }
 }

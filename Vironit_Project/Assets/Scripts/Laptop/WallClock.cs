@@ -3,9 +3,9 @@ using System.Collections;
 
 public class WallClock : MonoBehaviour 
 {
-    public float minutes;
-    public float hour;
-    public float seconds;
+    private float minutes=30.0f;
+    private float hour=6.0f;
+    private float seconds=0.0f;
 
     //-- time speed factor
     public float clockSpeed = 288.0f;     // 1.0f = realtime, < 1.0f = slower, > 1.0f = faster
@@ -17,10 +17,13 @@ public class WallClock : MonoBehaviour
 
 void Start() 
 {
-    minutes = PlayerPrefs.GetFloat("minutes");
-    hour = PlayerPrefs.GetFloat("hours");
-    seconds = PlayerPrefs.GetFloat("seconds");
-
+        if (PlayerPrefs.HasKey("seconds")) 
+        {
+            minutes = PlayerPrefs.GetFloat("minutes");
+            hour = PlayerPrefs.GetFloat("hours");
+            seconds = PlayerPrefs.GetFloat("seconds");
+        }
+   
     pointerSeconds = transform.Find("rotation_axis_pointer_seconds").gameObject;
     pointerMinutes = transform.Find("rotation_axis_pointer_minutes").gameObject;
     pointerHours   = transform.Find("rotation_axis_pointer_hour").gameObject;

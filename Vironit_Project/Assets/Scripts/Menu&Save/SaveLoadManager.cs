@@ -8,7 +8,6 @@ using UnityEngine;
 [Serializable]
 public class Data
 {
-    public List<Transform> TRANSposition = new List<Transform>();
     public List<Vector3> position = new List<Vector3>();
     public List<Quaternion> rotation = new List<Quaternion>();
     public List<Vector3> velocity = new List<Vector3>();
@@ -20,7 +19,7 @@ public class SaveLoadManager : MonoBehaviour
 {
     private void Start()
     {
-        if(File.Exists("E:/" + "Save.txt")) 
+        if(File.Exists(Application.dataPath + "Save.txt")) 
         {
             LoadData();
         }
@@ -44,12 +43,12 @@ public class SaveLoadManager : MonoBehaviour
             }
         }
         string json = JsonUtility.ToJson(enemy, true);
-        File.WriteAllText("E:/" + "Save.txt", json);
+        File.WriteAllText(Application.dataPath + "Save.txt", json);
     }
 
     public void LoadData()
     {
-        string json = File.ReadAllText("E:/" + "Save.txt");
+        string json = File.ReadAllText(Application.dataPath + "Save.txt");
         Data returnData = JsonUtility.FromJson<Data>(json);
         for (int i = 0; i < sphere.Count; i++)
         {
