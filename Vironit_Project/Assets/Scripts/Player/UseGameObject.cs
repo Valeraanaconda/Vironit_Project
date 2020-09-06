@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UseGameObject : MonoBehaviour
 {
-    MouseLook mouse;
+    private MouseLook mouse;
     public PlayerMovement movement;
 
     public GameObject monitor;
@@ -20,9 +20,9 @@ public class UseGameObject : MonoBehaviour
     Vector3 laptopPosition;
     Quaternion laptopRotation;
 
-    private float yOffset = 0.53f;
-    private float zOffset = 0.57f;
-    private float xAnglePosition = 16f;
+    private float yOffset = -0.15f;
+    private float zOffset = -0.35f;
+    private float xAnglePosition = 25f;
 
     private void Start()
     {
@@ -45,7 +45,7 @@ public class UseGameObject : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 2.0f, layerMask))
+        if (Physics.Raycast(ray, out hit, 1.0f, layerMask))
         {
             textE.SetActive(true);
 
@@ -70,7 +70,7 @@ public class UseGameObject : MonoBehaviour
 
     public void UseLaptop()
     {
-      laptopPosition = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z + zOffset);
+      laptopPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z - zOffset);
 
       laptopRotation = Quaternion.Euler(xAnglePosition, player.transform.rotation.eulerAngles.y-180, 0);
 

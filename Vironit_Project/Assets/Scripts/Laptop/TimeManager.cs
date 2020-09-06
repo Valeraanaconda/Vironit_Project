@@ -21,7 +21,7 @@ public class TimeManager : MonoBehaviour
     }
     void Update()
     {
-        timer += Time.deltaTime;
+        timer += Time.deltaTime*288.0f;
         if (timer >= 1.0f)
         {
             timer = 0.0f;

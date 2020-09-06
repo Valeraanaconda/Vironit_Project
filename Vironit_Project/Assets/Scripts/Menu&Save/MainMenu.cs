@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        if (File.Exists(Application.dataPath + "Save.txt")) 
+        if (File.Exists("E:/" + "Save.txt")) 
         {
             continueButton.SetActive(true);
             resetButton.SetActive(true);
@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayNewGame() 
     {
-        File.Delete(Application.dataPath + "Save.txt");
+        File.Delete("E:/" + "Save.txt");
         SceneManager.LoadScene("Game");
     }
     public void ContinueGame()
@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
     }
     public void ResetProgress()
     {
-        File.Delete(Application.dataPath + "Save.txt");
+        File.Delete("E:/" + "Save.txt");
         SceneManager.LoadScene("Main Menu");
     }
 

@@ -8,7 +8,7 @@ public class WallClock : MonoBehaviour
     public float seconds;
 
     //-- time speed factor
-    public float clockSpeed = 1.0f;     // 1.0f = realtime, < 1.0f = slower, > 1.0f = faster
+    public float clockSpeed = 288.0f;     // 1.0f = realtime, < 1.0f = slower, > 1.0f = faster
 
     float msecs;
     GameObject pointerSeconds;
