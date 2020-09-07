@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OpenDoor : MonoBehaviour
 {
+    public bool IsOpen = false;
     public Animator open_door;
     void Start()
     {
@@ -14,17 +15,9 @@ public class OpenDoor : MonoBehaviour
     {
         if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
-            open_door.Play("Open_door");
-
-
+            IsOpen = !IsOpen;
+            open_door.SetBool("IsOpen",IsOpen);
         }
-        if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
-        {
-            open_door.Play("Close_door");
-        }
-
-
-
-
     }
+
 }
