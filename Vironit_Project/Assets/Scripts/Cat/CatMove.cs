@@ -8,6 +8,7 @@ public class CatMove : MonoBehaviour
     private NavMeshAgent agent;
     public List<Transform> points;
     private Animator anim;
+    private AudioSource audio;
 
     public int curPoint;
     public float MainwhaitTime;
@@ -18,6 +19,7 @@ public class CatMove : MonoBehaviour
 
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         whaitTime = MainwhaitTime;
         agent = GetComponent<NavMeshAgent>();
@@ -63,6 +65,7 @@ public class CatMove : MonoBehaviour
             Vector3 direction = other.transform.position - transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+            
         }
     }
     private void OnTriggerExit(Collider other)
@@ -74,5 +77,9 @@ public class CatMove : MonoBehaviour
             agent.speed = 1;
 
         }
+    }
+    public void sayMeay()
+    {
+        audio.Play();
     }
 }
