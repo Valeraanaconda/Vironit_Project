@@ -35,7 +35,6 @@ public class UseGameObject : MonoBehaviour
         playerCamera = GetComponent<Camera>();
         mouse = GetComponent<MouseLook>();
 
-
         startLaptopPosition = laptop.transform.position;
         startLaptopRotation = laptop.transform.rotation;
     }
