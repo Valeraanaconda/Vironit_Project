@@ -11,13 +11,18 @@ public class OpenDoor : MonoBehaviour
         open_door = GetComponent<Animator>();
     }
 
-    private void OnTriggerStay(Collider other)
+    public void openDoor()
     {
-        if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
-        {
-            IsOpen = !IsOpen;
-            open_door.SetBool("IsOpen",IsOpen);
-        }
+        IsOpen = !IsOpen;
+        open_door.SetBool("IsOpen", IsOpen);
     }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
+    //    {
+    //        IsOpen = !IsOpen;
+    //        open_door.SetBool("IsOpen",IsOpen);
+    //    }
+    //}
 
 }

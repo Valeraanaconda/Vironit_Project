@@ -19,6 +19,13 @@ public class MainMenu : MonoBehaviour
     public void PlayNewGame() 
     {
         File.Delete(Application.dataPath + "Save.txt");
+        PlayerPrefs.DeleteKey("seconds");
+        PlayerPrefs.DeleteKey("minutes");
+        PlayerPrefs.DeleteKey("hours");
+        PlayerPrefs.DeleteKey("timer");
+        PlayerPrefs.DeleteKey("DayTime");
+        PlayerPrefs.DeleteKey("SunIntencity");
+        PlayerPrefs.DeleteKey("MoonIntencity");
         SceneManager.LoadScene("Game");
     }
     public void ContinueGame()
@@ -28,6 +35,7 @@ public class MainMenu : MonoBehaviour
     public void ResetProgress()
     {
         File.Delete(Application.dataPath + "Save.txt");
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("Main Menu");
     }
 
