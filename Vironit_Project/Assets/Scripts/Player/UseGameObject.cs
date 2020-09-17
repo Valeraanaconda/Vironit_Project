@@ -15,8 +15,7 @@ public class UseGameObject : MonoBehaviour
     public GameObject player;
     public CatMove catMove;
     public OpenDoor door;
-    
-
+    public SafeController safe;
         
     private Camera playerCamera;
 
@@ -72,7 +71,6 @@ public class UseGameObject : MonoBehaviour
             }
             else if (hit.collider.tag == "Door")
             {
-                textE.SetActive(true);
                 UseDoor();
             }
             else if (hit.collider.tag == "Safe")
@@ -85,6 +83,7 @@ public class UseGameObject : MonoBehaviour
         {
             textE.SetActive(false);
             safeNumber.SetActive(false);
+            safe.usable_safe = false;
         }
     }
 
@@ -94,7 +93,14 @@ public class UseGameObject : MonoBehaviour
         {
             textE.SetActive(false);
             safeNumber.SetActive(true);
+            safe.usable_safe = true;
         }
+        if (safe.usable_safe == false)
+        {
+            textE.SetActive(true);
+        }
+
+
     }
     public void UseDoor()
     {
