@@ -2001,6 +2001,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4909941690500726}
   - component: {fileID: 7462230099714805968}
+  - component: {fileID: 2796116690558069100}
+  - component: {fileID: 5107935100770565620}
   m_Layer: 5
   m_Name: laptop
   m_TagString: Untagged
@@ -2015,9 +2017,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716111664439686}
-  m_LocalRotation: {x: -0.0000000094608765, y: -0.976296, z: 0.21643962, w: -0.000000042675254}
+  m_LocalRotation: {x: 0.00000006079362, y: -0.97629607, z: 0.2164396, w: 0.00000027422232}
   m_LocalPosition: {x: -5.348082, y: 2.1009, z: 6.1149945}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4143365056100512}
   - {fileID: 4763079543819776}
@@ -2025,7 +2027,7 @@ Transform:
   - {fileID: 1604786645}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.000002, y: -179.99998, z: 0}
 --- !u!65 &7462230099714805968
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2037,5 +2039,43 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3170298, y: 0.18953244, z: 0.12672842}
-  m_Center: {x: -0.011950573, y: 0.10027846, z: -0.088927805}
+  m_Size: {x: 0.3170298, y: 0.15278499, z: 0.12672842}
+  m_Center: {x: -0.011950573, y: 0.11865219, z: -0.088927805}
+--- !u!114 &2796116690558069100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716111664439686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 5107935100770565620}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5107935100770565620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716111664439686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
