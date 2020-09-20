@@ -8,7 +8,7 @@ public class MultyMovement : MonoBehaviourPun
 
     public CharacterController controller;
     public float speed = 2f;
-
+   
     void Update()
     {
         if (photonView.IsMine)

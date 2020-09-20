@@ -1,16 +1,19 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MultyUse : MonoBehaviour
+public class MultyUse : MonoBehaviourPun, IPunObservable
 {
+    private GameObjectsPool gameObjectsPool;
+
     private Canvas screen;
     private Canvas button;
 
+    private AudioListener audioListener;
+
     private MouseLook mouse;
-    private PlayerMovement movement;
-    private CatMove catMove;
-    private OpenDoor door;
+    private MultyMovement movement;
     //private SafeController safe;
     private Camera playerCamera;
 
@@ -19,31 +22,70 @@ public class MultyUse : MonoBehaviour
     private GameObject monitor;
     private GameObject laptop;
     private GameObject player;
+    private CatMove catMove;
+    private OpenDoor door;
 
-    Vector3 startLaptopPosition = new Vector3(-5.4f, 2.1f, 6.15f);
-    Vector3 startLaptopRotation = new Vector3(0f, 180f, 0f);
-    Quaternion startLaptopRotationAngles;
+    private Vector3 startLaptopPosition;
+    private Quaternion startLaptopRotation;
+
+    private bool isActivemonitor;
 
     private float zOffset = -0.4f;
     private float xAnglePosition = 25f;
     private float laptopX;
     private float laptopY;
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            Debug.Log("STREAM");
+            stream.SendNext(isActivemonitor);
+        }
+        else if (stream.IsReading)
+        {
+            Debug.Log("RECIEVE");
+            isActivemonitor = (bool)stream.ReceiveNext();
+        }
+    }
+
     private void Start()
     {
-        startLaptopRotationAngles.eulerAngles = startLaptopRotation;
-        player = GameObject.FindGameObjectWithTag("Player");
-        textE = GameObject.FindGameObjectWithTag("TextE");
+        gameObjectsPool = GameObject.FindGameObjectWithTag("GameObjectPool").GetComponent<GameObjectsPool>();
+
+        player = gameObjectsPool.playerPrefab.transform.GetChild(0).gameObject;
+        textE = gameObjectsPool.textE;
+        monitor = gameObjectsPool.monitor;
+        laptop = gameObjectsPool.laptop;
+        startLaptopPosition = laptop.transform.position;
+        startLaptopRotation = laptop.transform.rotation;
+
         //safeNumber = GameObject.FindGameObjectWithTag("Safe");
-        movement = player.GetComponent<PlayerMovement>();
-        door = GetComponent<OpenDoor>();
+        movement = player.GetComponent<MultyMovement>();
+        catMove = gameObjectsPool.cat.GetComponent<CatMove>();
+        door = gameObjectsPool.door.GetComponent<OpenDoor>();
         //safe = GetComponent<SafeController>();
         mouse = GetComponent<MouseLook>();
         playerCamera = GetComponent<Camera>();
+        audioListener = GetComponent<AudioListener>();
+
+        if (!photonView.IsMine)
+        {
+            Debug.LogWarning("ВЫБОР СДЕЛАН");
+            playerCamera.gameObject.SetActive(false);
+            audioListener.gameObject.SetActive(false);
+        }
     }
+
     void Update()
     {
-        GetObject();
+        if (photonView.IsMine) 
+        {
+            GetObject();
+
+            //if (isActivemonitor) monitor.SetActive(false);
+            //else monitor.SetActive(true);
+        }
     }
 
     public void GetObject()
@@ -56,15 +98,13 @@ public class MultyUse : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 1.0f, layerMask))
         {
-            // Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
 
             if (hit.collider.name == "laptop")
             {
                 laptopX = ray.origin.x;
                 laptopY = ray.origin.y - 0.1f;
-                laptop = hit.transform.gameObject;
                 screen = laptop.transform.GetChild(2).GetComponent<Canvas>();
-                button= laptop.transform.GetChild(3).GetComponent<Canvas>();
+                button = laptop.transform.GetChild(3).GetComponent<Canvas>();
                 screen.worldCamera = playerCamera;
                 button.worldCamera = playerCamera;
                 textE.SetActive(true);
@@ -73,18 +113,16 @@ public class MultyUse : MonoBehaviour
             else if (hit.collider.name == "TVset")
             {
                 textE.SetActive(true);
-                Transform tv = hit.transform;
-                monitor = tv.GetChild(0).gameObject;
                 UseTV();
             }
             else if (hit.collider.tag == "Cat")
             {
-                catMove = hit.transform.gameObject.GetComponent<CatMove>();
                 textE.SetActive(true);
                 UseCat();
             }
             else if (hit.collider.tag == "Door")
             {
+                textE.SetActive(true);
                 UseDoor();
             }
             else if (hit.collider.tag == "Safe")
@@ -146,7 +184,7 @@ public class MultyUse : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.E))
         {
             laptop.transform.position = startLaptopPosition;
-            laptop.transform.rotation = startLaptopRotationAngles;
+            laptop.transform.rotation = startLaptopRotation;
             Cursor.lockState = CursorLockMode.Locked;
             mouse.mouseSensitivity = 100.0f;
             movement.speed = 2.0f;
@@ -156,8 +194,8 @@ public class MultyUse : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (monitor.activeSelf) monitor.SetActive(false);
-            else monitor.SetActive(true);
+            if (monitor.activeSelf) isActivemonitor = true;
+            else isActivemonitor = false;
         }
     }
 }
