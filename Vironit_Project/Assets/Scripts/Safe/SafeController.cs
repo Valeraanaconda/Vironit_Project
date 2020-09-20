@@ -49,7 +49,6 @@ public class SafeController : MonoBehaviour
         }
         else
         {
-            Debug.Log("work");
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1f;
             safe_panel.SetActive(false);

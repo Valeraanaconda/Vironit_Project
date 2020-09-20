@@ -71,6 +71,7 @@ public class UseGameObject : MonoBehaviour
             }
             else if (hit.collider.tag == "Door")
             {
+                textE.SetActive(true);
                 UseDoor();
             }
             else if (hit.collider.tag == "Safe")
