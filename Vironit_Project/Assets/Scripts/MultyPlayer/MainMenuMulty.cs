@@ -7,7 +7,7 @@ using UnityEngine;
     {
         [SerializeField] private GameObject findOpponentPanel = null;
         [SerializeField] private GameObject waitingStatusPanel = null;
-        [SerializeField] private TextMeshProUGUI waitingStatusText = null;
+        //[SerializeField] private TextMeshProUGUI waitingStatusText = null;
 
         private bool isConnecting = false;
 
@@ -23,7 +23,6 @@ using UnityEngine;
             findOpponentPanel.SetActive(false);
             waitingStatusPanel.SetActive(true);
 
-            waitingStatusText.text = "Searching...";
 
             if (PhotonNetwork.IsConnected)
             {
@@ -69,12 +68,12 @@ using UnityEngine;
 
             if (playerCount != MaxPlayersPerRoom)
             {
-                waitingStatusText.text = "Waiting For Opponent";
+                //waitingStatusText.text = "Waiting For Opponent";
                 Debug.Log("Client is waiting for an opponent");
             }
             else
             {
-                waitingStatusText.text = "Opponent Found";
+                //waitingStatusText.text = "Opponent Found";
                 Debug.Log("Match is ready to begin");
             }
         }
@@ -85,7 +84,7 @@ using UnityEngine;
             {
                 PhotonNetwork.CurrentRoom.IsOpen = false;
 
-                waitingStatusText.text = "Opponent Found";
+                //waitingStatusText.text = "Opponent Found";
                 Debug.Log("Match is ready to begin");
 
                 PhotonNetwork.LoadLevel("MultyGame");

@@ -7,6 +7,8 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
 {
     private GameObjectsPool gameObjectsPool;
 
+    private GameObject window;
+
     private Canvas screen;
     private Canvas button;
 
@@ -14,14 +16,18 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
 
     private MouseLook mouse;
     private MultyMovement movement;
-    //private SafeController safe;
+    private SafeController safe;
     private Camera playerCamera;
 
     private GameObject textE;
-    //private GameObject safeNumber;
+    private GameObject safeNumber;
     private GameObject monitor;
     private GameObject laptop;
     private GameObject player;
+
+    private GameObject password;
+    private GameObject key;
+
     private CatMove catMove;
     private OpenDoor door;
 
@@ -29,6 +35,7 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
     private Quaternion startLaptopRotation;
 
     private bool isActivemonitor;
+    public bool takekey = false;
 
     private float zOffset = -0.4f;
     private float xAnglePosition = 25f;
@@ -39,12 +46,10 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            Debug.Log("STREAM");
             stream.SendNext(isActivemonitor);
         }
         else if (stream.IsReading)
         {
-            Debug.Log("RECIEVE");
             isActivemonitor = (bool)stream.ReceiveNext();
         }
     }
@@ -54,24 +59,27 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
         gameObjectsPool = GameObject.FindGameObjectWithTag("GameObjectPool").GetComponent<GameObjectsPool>();
 
         player = gameObjectsPool.playerPrefab.transform.GetChild(0).gameObject;
+
         textE = gameObjectsPool.textE;
+        password = gameObjectsPool.password;
+        key = gameObjectsPool.key;
         monitor = gameObjectsPool.monitor;
+        safeNumber = gameObjectsPool.safeNumber;
+        safe = gameObjectsPool.axis.GetComponent<SafeController>();
         laptop = gameObjectsPool.laptop;
         startLaptopPosition = laptop.transform.position;
         startLaptopRotation = laptop.transform.rotation;
 
-        //safeNumber = GameObject.FindGameObjectWithTag("Safe");
         movement = player.GetComponent<MultyMovement>();
         catMove = gameObjectsPool.cat.GetComponent<CatMove>();
         door = gameObjectsPool.door.GetComponent<OpenDoor>();
-        //safe = GetComponent<SafeController>();
+
         mouse = GetComponent<MouseLook>();
         playerCamera = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
 
         if (!photonView.IsMine)
         {
-            Debug.LogWarning("ВЫБОР СДЕЛАН");
             playerCamera.gameObject.SetActive(false);
             audioListener.gameObject.SetActive(false);
         }
@@ -130,31 +138,50 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
                 textE.SetActive(true);
                 UseSafe();
             }
+            else if (hit.collider.tag == "key")
+            {
+                textE.SetActive(true);
+                use_key();
+            }
+            else if (hit.collider.tag == "Window")
+            {
+                window = hit.transform.gameObject;
+                textE.SetActive(true);
+                BreakWindow();
+            }
         }
         else
         {
             textE.SetActive(false);
-            //safeNumber.SetActive(false);
-            //safe.usable_safe = false;
+            safeNumber.SetActive(false);
+            password.SetActive(false);
+            safe.usable_safe = false;
         }
     }
-
+    public void use_key()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            takekey = true;
+            key.SetActive(false);
+        }
+    }
     public void UseSafe()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             textE.SetActive(false);
-            //safeNumber.SetActive(true);
-            //safe.usable_safe = true;
+            safeNumber.SetActive(true);
+            safe.usable_safe = true;
         }
-        //if (safe.usable_safe == false)
-        //{
-        //    textE.SetActive(true);
-        //}
+        if (safe.usable_safe == false)
+        {
+            textE.SetActive(true);
+        }
     }
     public void UseDoor()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && takekey == true)
         {
             door.openDoor();
         }
@@ -163,6 +190,9 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            password.SetActive(true);
+            if (takekey == true) password.SetActive(false);
+
             catMove.sayMeay();
         }
     }
@@ -194,8 +224,16 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (monitor.activeSelf) isActivemonitor = true;
-            else isActivemonitor = false;
+            if (monitor.activeSelf) monitor.SetActive(false);
+            else monitor.SetActive(true);
         }
+    }
+    public void BreakWindow()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Instantiate(gameObjectsPool.sphere,window.transform.position, Quaternion.identity);
+        }
+        gameObjectsPool.sounds.gameObject.SetActive(true);
     }
 }
