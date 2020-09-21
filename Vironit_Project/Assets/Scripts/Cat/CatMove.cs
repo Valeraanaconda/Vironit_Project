@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class CatMove : MonoBehaviour
 {
     private NavMeshAgent agent;
@@ -53,6 +54,7 @@ public class CatMove : MonoBehaviour
                     whaitTime -= Time.deltaTime;
                 }
             }
+
         }
     }
     private void OnTriggerStay(Collider other)
@@ -75,11 +77,11 @@ public class CatMove : MonoBehaviour
             logic = true;
             anim.SetBool("isSit", false);
             agent.speed = 1;
-
         }
     }
     public void sayMeay()
     {
         audio.Play();
     }
+    
 }

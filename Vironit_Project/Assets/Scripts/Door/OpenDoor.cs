@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OpenDoor : MonoBehaviour
 {
@@ -15,14 +16,8 @@ public class OpenDoor : MonoBehaviour
     {
         IsOpen = !IsOpen;
         open_door.SetBool("IsOpen", IsOpen);
+        Application.Quit();
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
-    //    {
-    //        IsOpen = !IsOpen;
-    //        open_door.SetBool("IsOpen",IsOpen);
-    //    }
-    //}
+   
 
 }

@@ -18,7 +18,6 @@ public class SafeController : MonoBehaviour
     {
         safe_anim = GetComponent<Animator>();
         usable_safe = false;
-        password += "1234";
     }
 
     private void Update()
@@ -28,7 +27,7 @@ public class SafeController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Time.timeScale = 0f;
         }
-
+       
     }
 
     public void AddValue(string number)

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class UseGameObject : MonoBehaviour
 {
+    public bool takekey = false;
     private MouseLook mouse;
     public PlayerMovement movement;
 
+    public GameObject password;
     public GameObject textE;
     public GameObject safeNumber;
 
@@ -16,6 +18,7 @@ public class UseGameObject : MonoBehaviour
     public CatMove catMove;
     public OpenDoor door;
     public SafeController safe;
+    public GameObject key;
         
     private Camera playerCamera;
 
@@ -79,15 +82,28 @@ public class UseGameObject : MonoBehaviour
                 textE.SetActive(true);
                 UseSafe();
             }
+            else if (hit.collider.tag == "key")
+            {
+                textE.SetActive(true);
+                use_key();
+            }
         }
         else
         {
             textE.SetActive(false);
+            password.SetActive(false);
             safeNumber.SetActive(false);
             safe.usable_safe = false;
         }
     }
-
+    public void use_key()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            takekey = true;
+            key.SetActive(false);
+        }
+    }
     public void UseSafe()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -105,7 +121,7 @@ public class UseGameObject : MonoBehaviour
     }
     public void UseDoor()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && takekey == true)
         {
             door.openDoor();
         }
@@ -114,6 +130,9 @@ public class UseGameObject : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            password.SetActive(true);
+            if (takekey == true) password.SetActive(false);
+
             catMove.sayMeay();
         }
     }

@@ -26,13 +26,14 @@ public class PauseMenu : MonoBehaviour
     // Возможно добавлю кнопку для возвращения в главное меню
     public void Resume() 
     {
-
+        Time.timeScale = 1f;
         Cursor.visible = true;
         pauseMenuUI.SetActive(false);
         gameIsPaused = false;
     }
     void Pause()
     {
+        Time.timeScale = 0f;
         Cursor.visible = false;
         pauseMenuUI.SetActive(true);
         gameIsPaused = true;

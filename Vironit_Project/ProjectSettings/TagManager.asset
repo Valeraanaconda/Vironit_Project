@@ -11,6 +11,8 @@ TagManager:
   - SafeMenu
   - TextE
   - GameObjectPool
+  - key
+  - quit
   layers:
   - Default
   - TransparentFX
