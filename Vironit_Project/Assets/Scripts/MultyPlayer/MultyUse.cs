@@ -1,9 +1,8 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MultyUse : MonoBehaviourPun, IPunObservable
+public class MultyUse : MonoBehaviour
 {
     private GameObjectsPool gameObjectsPool;
 
@@ -11,8 +10,6 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
 
     private Canvas screen;
     private Canvas button;
-
-    private AudioListener audioListener;
 
     private MouseLook mouse;
     private MultyMovement movement;
@@ -34,25 +31,12 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
     private Vector3 startLaptopPosition;
     private Quaternion startLaptopRotation;
 
-    private bool isActivemonitor;
     public bool takekey = false;
 
     private float zOffset = -0.4f;
     private float xAnglePosition = 25f;
     private float laptopX;
     private float laptopY;
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(isActivemonitor);
-        }
-        else if (stream.IsReading)
-        {
-            isActivemonitor = (bool)stream.ReceiveNext();
-        }
-    }
 
     private void Start()
     {
@@ -76,24 +60,11 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
 
         mouse = GetComponent<MouseLook>();
         playerCamera = GetComponent<Camera>();
-        audioListener = GetComponent<AudioListener>();
-
-        if (!photonView.IsMine)
-        {
-            playerCamera.gameObject.SetActive(false);
-            audioListener.gameObject.SetActive(false);
-        }
     }
 
     void Update()
     {
-        if (photonView.IsMine) 
-        {
-            GetObject();
-
-            //if (isActivemonitor) monitor.SetActive(false);
-            //else monitor.SetActive(true);
-        }
+        GetObject();
     }
 
     public void GetObject()
@@ -148,6 +119,12 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
                 window = hit.transform.gameObject;
                 textE.SetActive(true);
                 BreakWindow();
+            }
+            else if (hit.collider.tag == "Sphere")
+            {
+                textE.SetActive(true);
+                GameObject sphere = hit.transform.gameObject;
+                sphere.transform.Translate(Vector3.forward);
             }
         }
         else
@@ -232,8 +209,8 @@ public class MultyUse : MonoBehaviourPun, IPunObservable
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Instantiate(gameObjectsPool.sphere,window.transform.position, Quaternion.identity);
+            Instantiate(gameObjectsPool.sphere, window.transform.position, Quaternion.identity);
+            gameObjectsPool.sounds.gameObject.SetActive(true);
         }
-        gameObjectsPool.sounds.gameObject.SetActive(true);
     }
 }

@@ -18,5 +18,4 @@ public class GameObjectsPool : MonoBehaviour
     public GameObject sounds;
     public GameObject window1;
     public GameObject window2;
-
 }
