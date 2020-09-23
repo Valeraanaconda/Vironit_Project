@@ -5,6 +5,9 @@ using UnityEngine;
 public class UseGameObject : MonoBehaviour
 {
     public bool takekey = false;
+    private GameObject window;
+    public GameObject sphere;
+    public GameObject sounds;
     private MouseLook mouse;
     public PlayerMovement movement;
 
@@ -25,12 +28,10 @@ public class UseGameObject : MonoBehaviour
     Vector3 startLaptopPosition;
     Quaternion startLaptopRotation;
 
-    Vector3 laptopPosition;
-    Quaternion laptopRotation;
-
-    private float yOffset = -0.15f;
-    private float zOffset = -0.35f;
+    private float zOffset = -0.25f;
     private float xAnglePosition = 25f;
+    private float laptopX;
+    private float laptopY;
 
     private void Start()
     {
@@ -59,6 +60,8 @@ public class UseGameObject : MonoBehaviour
 
             if (hit.collider.name == "laptop")
             {
+                laptopX = ray.origin.x;
+                laptopY = ray.origin.y - 0.1f;
                 textE.SetActive(true);
                 UseLaptop();
             }
@@ -86,6 +89,12 @@ public class UseGameObject : MonoBehaviour
             {
                 textE.SetActive(true);
                 use_key();
+            }
+            else if (hit.collider.tag == "Window")
+            {
+                window = hit.transform.gameObject;
+                textE.SetActive(true);
+                BreakWindow();
             }
         }
         else
@@ -138,16 +147,15 @@ public class UseGameObject : MonoBehaviour
     }
     public void UseLaptop()
     {
-        laptopPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z - zOffset);
+        Vector3 laptopPosition = new Vector3(laptopX, laptopY, transform.position.z - zOffset);
 
-        laptopRotation = Quaternion.Euler(xAnglePosition, player.transform.rotation.eulerAngles.y - 180, 0);
+        Quaternion laptopRotation = Quaternion.Euler(xAnglePosition, player.transform.rotation.eulerAngles.y - 180, 0);
 
         if (Input.GetKeyDown(KeyCode.E) && (laptop.transform.position == startLaptopPosition))
         {
             laptop.transform.position = laptopPosition;
             laptop.transform.rotation = laptopRotation;
-            // Костыль помогающий свести к минимуму погрешности
-            //laptop.transform.localScale = new Vector3(3.0f, 3.0f, 3.0f);
+            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             mouse.mouseSensitivity = 0.0f;
             movement.speed = 0.0f;
@@ -157,6 +165,7 @@ public class UseGameObject : MonoBehaviour
         {
             laptop.transform.position = startLaptopPosition;
             laptop.transform.rotation = startLaptopRotation;
+            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             mouse.mouseSensitivity = 100.0f;
             movement.speed = 2.0f;
@@ -168,6 +177,14 @@ public class UseGameObject : MonoBehaviour
         {
             if (monitor.activeSelf) monitor.SetActive(false);
             else monitor.SetActive(true);
+        }
+    }
+    public void BreakWindow()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Instantiate(sphere, window.transform.position, Quaternion.identity);
+            sounds.SetActive(true);
         }
     }
 }

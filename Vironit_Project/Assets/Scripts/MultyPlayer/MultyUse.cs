@@ -1,21 +1,25 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MultyUse : MonoBehaviour
 {
-    private GameObjectsPool gameObjectsPool;
+    public bool takekey = false;
 
-    private GameObject window;
+    public PhotonView playerView;
+
+    private GameObjectsPool gameObjectsPool;
 
     private Canvas screen;
     private Canvas button;
 
     private MouseLook mouse;
-    private MultyMovement movement;
+    public MultyMovement movement;
     private SafeController safe;
     private Camera playerCamera;
 
+    private GameObject window;
     private GameObject textE;
     private GameObject safeNumber;
     private GameObject monitor;
@@ -30,8 +34,6 @@ public class MultyUse : MonoBehaviour
 
     private Vector3 startLaptopPosition;
     private Quaternion startLaptopRotation;
-
-    public bool takekey = false;
 
     private float zOffset = -0.4f;
     private float xAnglePosition = 25f;
@@ -54,7 +56,7 @@ public class MultyUse : MonoBehaviour
         startLaptopPosition = laptop.transform.position;
         startLaptopRotation = laptop.transform.rotation;
 
-        movement = player.GetComponent<MultyMovement>();
+        movement = GetComponent<MultyMovement>();
         catMove = gameObjectsPool.cat.GetComponent<CatMove>();
         door = gameObjectsPool.door.GetComponent<OpenDoor>();
 
@@ -80,6 +82,7 @@ public class MultyUse : MonoBehaviour
 
             if (hit.collider.name == "laptop")
             {
+                laptop.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
                 laptopX = ray.origin.x;
                 laptopY = ray.origin.y - 0.1f;
                 screen = laptop.transform.GetChild(2).GetComponent<Canvas>();
@@ -101,11 +104,15 @@ public class MultyUse : MonoBehaviour
             }
             else if (hit.collider.tag == "Door")
             {
+                GameObject openDoor = hit.transform.gameObject;
+                openDoor.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
                 textE.SetActive(true);
                 UseDoor();
             }
             else if (hit.collider.tag == "Safe")
             {
+                GameObject partOfSafe = hit.transform.gameObject;
+                partOfSafe.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
                 textE.SetActive(true);
                 UseSafe();
             }
@@ -116,16 +123,18 @@ public class MultyUse : MonoBehaviour
             }
             else if (hit.collider.tag == "Window")
             {
-                window = hit.transform.gameObject;
-                textE.SetActive(true);
-                BreakWindow();
+               window = hit.transform.gameObject;
+               window.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
+               textE.SetActive(true);
+               BreakWindow();
             }
-            else if (hit.collider.tag == "Sphere")
-            {
-                textE.SetActive(true);
-                GameObject sphere = hit.transform.gameObject;
-                sphere.transform.Translate(Vector3.forward);
-            }
+            //else if (hit.collider.tag == "Sphere")
+            //{
+            //    textE.SetActive(true);
+            //    GameObject sphere = hit.transform.gameObject;
+            //    sphere.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
+            //    sphere.transform.Translate(Vector3.forward);
+            //}
         }
         else
         {
@@ -169,7 +178,6 @@ public class MultyUse : MonoBehaviour
         {
             password.SetActive(true);
             if (takekey == true) password.SetActive(false);
-
             catMove.sayMeay();
         }
     }
@@ -183,6 +191,7 @@ public class MultyUse : MonoBehaviour
         {
             laptop.transform.position = laptopPosition;
             laptop.transform.rotation = laptopRotation;
+            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             mouse.mouseSensitivity = 0.0f;
             movement.speed = 0.0f;
@@ -192,6 +201,7 @@ public class MultyUse : MonoBehaviour
         {
             laptop.transform.position = startLaptopPosition;
             laptop.transform.rotation = startLaptopRotation;
+            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             mouse.mouseSensitivity = 100.0f;
             movement.speed = 2.0f;

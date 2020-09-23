@@ -10,13 +10,13 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        if (File.Exists(Application.dataPath + "Save.txt")) 
+        if (File.Exists(Application.dataPath + "Save.txt"))
         {
             continueButton.SetActive(true);
             resetButton.SetActive(true);
         }
     }
-    public void PlayNewGame() 
+    public void PlayNewGame()
     {
         File.Delete(Application.dataPath + "Save.txt");
         PlayerPrefs.DeleteKey("seconds");
@@ -38,11 +38,13 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("Main Menu");
     }
-
-
-    public void QuitGame() 
+    public void QuitGame()
     {
         Application.Quit();
     }
-    
+    public void MultyPlay()
+    {
+        SceneManager.LoadScene("NewLobby");
+    }
+
 }

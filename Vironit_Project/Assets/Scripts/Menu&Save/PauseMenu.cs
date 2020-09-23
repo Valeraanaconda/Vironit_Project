@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
     public GameObject pauseMenuUI;
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -26,15 +24,16 @@ public class PauseMenu : MonoBehaviour
     // Возможно добавлю кнопку для возвращения в главное меню
     public void Resume() 
     {
-        //Time.timeScale = 1f;
-        Cursor.visible = true;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pauseMenuUI.SetActive(false);
         gameIsPaused = false;
     }
     void Pause()
     {
-        //Time.timeScale = 0f;
-        Cursor.visible = false;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
         pauseMenuUI.SetActive(true);
         gameIsPaused = true;
     }
