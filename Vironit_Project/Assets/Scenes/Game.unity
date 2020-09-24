@@ -1318,6 +1318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 257815497}
+  - component: {fileID: 257815498}
   m_Layer: 0
   m_Name: Doors
   m_TagString: Untagged
@@ -1340,6 +1341,102 @@ Transform:
   m_Father: {fileID: 1921003475}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &257815498
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257815496}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &258627939
 GameObject:
   m_ObjectHideFlags: 0
@@ -14678,7 +14775,6 @@ GameObject:
   - component: {fileID: 1359347046}
   - component: {fileID: 1359347045}
   - component: {fileID: 1359347048}
-  - component: {fileID: 1359347049}
   m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
@@ -14779,39 +14875,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   takekey: 0
+  doorIsopen: {fileID: 257815498}
+  closeDoor: {fileID: 8300000, guid: 671aea171dc068041b73ad7619cda310, type: 3}
+  openDoor: {fileID: 8300000, guid: c8289492ddc983a42b45874c9501633e, type: 3}
   sphere: {fileID: 7218574079773172016, guid: 66bf9f9c5d63e894694184840af50135, type: 3}
   sounds: {fileID: 1059680222}
-  movement: {fileID: 1390421225}
   password: {fileID: 1319653577}
   textE: {fileID: 421256594}
   safeNumber: {fileID: 1338080308}
   monitor: {fileID: 1570056713}
   laptop: {fileID: 1291804177}
   player: {fileID: 1390421223}
+  key: {fileID: 7846030712777062491}
+  movement: {fileID: 1390421225}
   catMove: {fileID: 1065157963}
   door: {fileID: 1645719262}
   safe: {fileID: 319227064}
-  key: {fileID: 7846030712777062491}
---- !u!114 &1359347049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359347043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77a1a2e07a88690449e990df672f6e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textE: {fileID: 421256594}
-  GRABI: 0
-  grabPower: 10
-  throwPower: 10
-  RayDistance: 30
-  offset: {fileID: 0}
-  hand: {fileID: 862010743}
-  camera: {fileID: 1359347047}
 --- !u!1 &1380054715
 GameObject:
   m_ObjectHideFlags: 0
@@ -19984,7 +20063,7 @@ GameObject:
   - component: {fileID: 7573374024488515992}
   - component: {fileID: 7846030712777062492}
   m_Layer: 5
-  m_Name: 21929_Key_v1
+  m_Name: Key
   m_TagString: key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

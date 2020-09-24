@@ -7,6 +7,7 @@ public class MultyUse : MonoBehaviour
 {
     public bool takekey = false;
 
+
     public PhotonView playerView;
 
     private GameObjectsPool gameObjectsPool;
@@ -14,8 +15,6 @@ public class MultyUse : MonoBehaviour
     private Canvas screen;
     private Canvas button;
 
-    private MouseLook mouse;
-    public MultyMovement movement;
     private SafeController safe;
     private Camera playerCamera;
 
@@ -25,10 +24,11 @@ public class MultyUse : MonoBehaviour
     private GameObject monitor;
     private GameObject laptop;
     private GameObject player;
-
     private GameObject password;
     private GameObject key;
 
+    public MouseLook mouse;
+    public MultyMovement movement;
     private CatMove catMove;
     private OpenDoor door;
 
@@ -51,16 +51,13 @@ public class MultyUse : MonoBehaviour
         key = gameObjectsPool.key;
         monitor = gameObjectsPool.monitor;
         safeNumber = gameObjectsPool.safeNumber;
-        safe = gameObjectsPool.axis.GetComponent<SafeController>();
         laptop = gameObjectsPool.laptop;
         startLaptopPosition = laptop.transform.position;
         startLaptopRotation = laptop.transform.rotation;
 
-        movement = GetComponent<MultyMovement>();
+        safe = gameObjectsPool.axis.GetComponent<SafeController>();
         catMove = gameObjectsPool.cat.GetComponent<CatMove>();
         door = gameObjectsPool.door.GetComponent<OpenDoor>();
-
-        mouse = GetComponent<MouseLook>();
         playerCamera = GetComponent<Camera>();
     }
 
@@ -104,37 +101,29 @@ public class MultyUse : MonoBehaviour
             }
             else if (hit.collider.tag == "Door")
             {
-                GameObject openDoor = hit.transform.gameObject;
-                openDoor.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
+                door.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
                 textE.SetActive(true);
                 UseDoor();
             }
             else if (hit.collider.tag == "Safe")
             {
-                GameObject partOfSafe = hit.transform.gameObject;
-                partOfSafe.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
+                safe.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
                 textE.SetActive(true);
                 UseSafe();
             }
             else if (hit.collider.tag == "key")
             {
+                key.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
                 textE.SetActive(true);
                 use_key();
             }
             else if (hit.collider.tag == "Window")
             {
-               window = hit.transform.gameObject;
-               window.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
-               textE.SetActive(true);
-               BreakWindow();
+                window = hit.transform.gameObject;
+                window.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
+                textE.SetActive(true);
+                BreakWindow();
             }
-            //else if (hit.collider.tag == "Sphere")
-            //{
-            //    textE.SetActive(true);
-            //    GameObject sphere = hit.transform.gameObject;
-            //    sphere.GetComponent<PhotonView>().TransferOwnership(playerView.Owner);
-            //    sphere.transform.Translate(Vector3.forward);
-            //}
         }
         else
         {
@@ -169,8 +158,14 @@ public class MultyUse : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && takekey == true)
         {
+            gameObjectsPool.doorIsOpen.PlayOneShot(gameObjectsPool.openDoor);
             door.openDoor();
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            gameObjectsPool.doorIsOpen.PlayOneShot(gameObjectsPool.closeDoor);
+        }
+
     }
     public void UseCat()
     {

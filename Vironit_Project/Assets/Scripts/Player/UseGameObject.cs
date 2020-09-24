@@ -5,24 +5,29 @@ using UnityEngine;
 public class UseGameObject : MonoBehaviour
 {
     public bool takekey = false;
+
+    public AudioSource doorIsopen;
+    public AudioClip closeDoor;
+    public AudioClip openDoor;
+
     private GameObject window;
     public GameObject sphere;
     public GameObject sounds;
-    private MouseLook mouse;
-    public PlayerMovement movement;
-
+   
     public GameObject password;
     public GameObject textE;
     public GameObject safeNumber;
-
     public GameObject monitor;
     public GameObject laptop;
     public GameObject player;
+    public GameObject key;
+
+    private MouseLook mouse;
+    public PlayerMovement movement;
     public CatMove catMove;
     public OpenDoor door;
     public SafeController safe;
-    public GameObject key;
-        
+   
     private Camera playerCamera;
 
     Vector3 startLaptopPosition;
@@ -132,7 +137,12 @@ public class UseGameObject : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && takekey == true)
         {
+            doorIsopen.PlayOneShot(openDoor);
             door.openDoor();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            doorIsopen.PlayOneShot(closeDoor);
         }
     }
     public void UseCat()

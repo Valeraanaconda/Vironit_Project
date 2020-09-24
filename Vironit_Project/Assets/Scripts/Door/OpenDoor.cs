@@ -16,8 +16,11 @@ public class OpenDoor : MonoBehaviour
     {
         IsOpen = !IsOpen;
         open_door.SetBool("IsOpen", IsOpen);
+        StartCoroutine("LoadScene");
+    }
+    IEnumerator LoadScene()
+    {
+        yield return new WaitForSeconds(1.5f);
         Application.Quit();
     }
-   
-
 }
