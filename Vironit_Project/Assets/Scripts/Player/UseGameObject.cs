@@ -9,6 +9,7 @@ public class UseGameObject : MonoBehaviour
     public AudioSource doorIsopen;
     public AudioClip closeDoor;
     public AudioClip openDoor;
+    public knob knob;
 
     private GameObject window;
     public GameObject sphere;
@@ -143,6 +144,7 @@ public class UseGameObject : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             doorIsopen.PlayOneShot(closeDoor);
+            knob.open_try(true);
         }
     }
     public void UseCat()

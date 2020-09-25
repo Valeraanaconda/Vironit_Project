@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Default_door_state
+  m_Name: def_knob_state
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
